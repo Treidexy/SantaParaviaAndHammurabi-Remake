@@ -1,3 +1,6 @@
+import player
+import game
+
 places = ['Ur Mom County', 'Yougourtland', 'England in London', 'United State of Washington D.C.']
 players = []
 
@@ -37,7 +40,7 @@ def selectDifficulty(selected, name):
     
     
 
-def game():
+def main(args):
     print("Santa Paravia and Fiumaccio")
     print('---------')
     doInstructions = input('Do you want instructions (Y/N)\n')
@@ -46,7 +49,7 @@ def game():
         print('---------')
         instructions()
     print('---------')
-    
+
     numOfPlayers = int(input('How many players are there?\n'))
     if numOfPlayers < 1:
         numOfPlayers = 1
@@ -56,13 +59,13 @@ def game():
         print('Try again with less players please. (Maybe split into groups).')
         return
     print('---------')
-    
+
     for player in range(numOfPlayers):
         name = input('You, player %s, what is your name?\n' % (player + 1))
         name = name.rstrip()
         print('Great, %s, you are owner of' % name, places[player] + '!')
         
-        gender = input('So, %s, are you a Man or a WowMan! (M/F)\n')
+        gender = input('So, %s, are you a Man or a WowMan! (M/F)\n' % name)
         if gender == 'M':
             gender = 'm'
         if gender == 'F':
@@ -71,17 +74,8 @@ def game():
         dyfficulty = selectDifficulty(-1, name)
         print('---------')
         
-        players.append(Player(player, dyfficulty, gender))
-    
-class Player:
-    cashMoney = 0
-    isDead = False
-    grain = 0
-    
-    
-    def __init__(self, playerId, diffyculty, gendyr):
-        self.playerId = playerId
-        self.diffyculty = diffyculty
-        self.gendyr = gendyr
+        players.append(player.Player(player, dyfficulty, gender))
 
-game()
+    game.playGame()
+
+main(sys.argv[1:])
