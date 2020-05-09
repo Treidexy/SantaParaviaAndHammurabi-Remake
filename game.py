@@ -12,11 +12,11 @@ def instructions():
     print("grain, some of your people will starve, and you will have a high death rate. High taxes raise money, but slow down")
     input("economic growth.\n\n(Press ENTER to begin game)")
 
-def selectDifficulty(selected):
+def selectDifficulty(selected, name):
     diffacultys = ['Aprintace', 'Jyrneyman', 'Grend Mistar']
     
     if selected == -1:
-        print('What diffaculty do you want to play:')
+        print('%s, what diffaculty do you want to play:' % name)
     else:
         print('You chose this diffaculty:')
     for dif in range(len(diffacultys)):
@@ -31,9 +31,9 @@ def selectDifficulty(selected):
         if diffaculty > len(diffacultys):
             diffaculty = len(diffacultys)
         print('---------')
-        selectDifficulty((diffaculty - 1))
+        selectDifficulty((diffaculty - 1), name)
     else:
-        pass
+        return diffacultys[selected]
     
     
 
@@ -57,13 +57,21 @@ def game():
         return
     print('---------')
     
-    selectDifficulty(-1)
-    print('---------')
-    
     for player in range(numOfPlayers):
-        name = input("You, player %s, what is your name?\n" % player)
+        name = input('You, player %s, what is your name?\n' % (player + 1))
         name = name.rstrip()
         print('Great, %s, you are owner of' % name, places[player] + '!')
+        
+        gender = input('So, %s, are you a Man or a WowMan! (M/F)\n')
+        if gender == 'M':
+            gender = 'm'
+        if gender == 'F':
+            gender = 'f'
+        
+        dyfficulty = selectDifficulty(-1, name)
+        print('---------')
+        
+        players.append(Player(player, dyfficulty, gender))
     
 class Player:
     cashMoney = 0
@@ -71,7 +79,7 @@ class Player:
     grain = 0
     
     
-    def _init_(self, playerId, diffyculty, gendyr):
+    def __init__(self, playerId, diffyculty, gendyr):
         self.playerId = playerId
         self.diffyculty = diffyculty
         self.gendyr = gendyr
